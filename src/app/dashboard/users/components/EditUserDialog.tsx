@@ -1,0 +1,234 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { User } from "./UserManagement"
+
+interface EditUserDialogProps {
+  isOpen: boolean
+  user: User
+  onClose: () => void
+  onSubmit: (
+    userId: string,
+    updates: {
+      email?: string
+      firstName?: string
+      lastName?: string
+      enabled?: boolean
+      emailVerified?: boolean
+    }
+  ) => Promise<{ success: boolean; error?: string }>
+}
+
+export function EditUserDialog({ isOpen, user, onClose, onSubmit }: EditUserDialogProps) {
+  const [formData, setFormData] = useState({
+    email: user.email,
+    firstName: user.firstName || "",
+    lastName: user.lastName || "",
+    enabled: user.enabled ?? true,
+    emailVerified: user.emailVerified ?? false,
+  })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    setFormData({
+      email: user.email,
+      firstName: user.firstName || "",
+      lastName: user.lastName || "",
+      enabled: user.enabled ?? true,
+      emailVerified: user.emailVerified ?? false,
+    })
+  }, [user])
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError(null)
+
+    const result = await onSubmit(user.id, {
+      email: formData.email,
+      firstName: formData.firstName || undefined,
+      lastName: formData.lastName || undefined,
+      enabled: formData.enabled,
+      emailVerified: formData.emailVerified,
+    })
+
+    setLoading(false)
+
+    if (result.success) {
+      onClose()
+    } else {
+      setError(result.error || "Failed to update user")
+    }
+  }
+
+  const handleClose = () => {
+    setError(null)
+    onClose()
+  }
+
+  if (!isOpen) return null
+
+  return (
+    <dialog className={`modal ${isOpen ? "modal-open" : ""}`}>
+      <div className="modal-box w-11/12 max-w-2xl">
+        <form method="dialog">
+          <button
+            type="button"
+            onClick={handleClose}
+            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          >
+            ✕
+          </button>
+        </form>
+        <h3 className="font-bold text-lg mb-4">Edit User</h3>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+            <div role="alert" className="alert alert-error">
+              <svg
+                className="h-6 w-6 shrink-0 stroke-current"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>{error}</span>
+            </div>
+          )}
+
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Username</span>
+            </label>
+            <input
+              type="text"
+              disabled
+              value={user.username}
+              className="input input-bordered input-disabled"
+            />
+            <label className="label">
+              <span className="label-text-alt text-base-content/60">
+                Username cannot be changed
+              </span>
+            </label>
+          </div>
+
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">
+                Email <span className="text-error">*</span>
+              </span>
+            </label>
+            <input
+              type="email"
+              required
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className="input input-bordered"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">First Name</span>
+              </label>
+              <input
+                type="text"
+                value={formData.firstName}
+                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                className="input input-bordered"
+              />
+            </div>
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Last Name</span>
+              </label>
+              <input
+                type="text"
+                value={formData.lastName}
+                onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                className="input input-bordered"
+              />
+            </div>
+          </div>
+
+          <div className="form-control">
+            <label className="label cursor-pointer justify-start gap-2">
+              <input
+                type="checkbox"
+                checked={formData.enabled}
+                onChange={(e) => setFormData({ ...formData, enabled: e.target.checked })}
+                className="checkbox checkbox-primary"
+              />
+              <span className="label-text">Enable user account</span>
+            </label>
+          </div>
+
+          <div className="form-control">
+            <label className="label cursor-pointer justify-start gap-2">
+              <input
+                type="checkbox"
+                checked={formData.emailVerified}
+                onChange={(e) => setFormData({ ...formData, emailVerified: e.target.checked })}
+                className="checkbox checkbox-primary"
+              />
+              <span className="label-text">Mark email as verified</span>
+            </label>
+          </div>
+
+          <div role="alert" className="alert alert-info">
+            <svg
+              className="h-6 w-6 shrink-0 stroke-current"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span>To reset the user's password, use the password reset button in the user list.</span>
+          </div>
+
+          <div className="modal-action">
+            <button
+              type="button"
+              onClick={handleClose}
+              disabled={loading}
+              className="btn"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-primary"
+            >
+              {loading ? (
+                <>
+                  <span className="loading loading-spinner"></span>
+                  Updating...
+                </>
+              ) : (
+                "Update User"
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
+      <form method="dialog" className="modal-backdrop">
+        <button type="button" onClick={handleClose}>close</button>
+      </form>
+    </dialog>
+  )
+}
