@@ -1,0 +1,165 @@
+services:
+  # Next.js Application
+  app:
+    image: registry.orb.local/k-wiki-app:latest
+    container_name: k-wiki-app
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://${POSTGRES_APP_USER}:${POSTGRES_APP_PASSWORD}@postgres:5432/${POSTGRES_APP_DB}
+      - MINIO_ENDPOINT=minio
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=${MINIO_ROOT_USER}
+      - MINIO_SECRET_KEY=${MINIO_ROOT_PASSWORD}
+      - MINIO_BUCKET_NAME=${MINIO_BUCKET_NAME}
+      - MINIO_USE_SSL=false
+      - KEYCLOAK_ID=${KEYCLOAK_CLIENT_ID}
+      - KEYCLOAK_SECRET=${KEYCLOAK_CLIENT_SECRET}
+      - KEYCLOAK_ISSUER=http://keycloak:8080/realms/${KEYCLOAK_REALM}
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_started
+      keycloak:
+        condition: service_started
+    networks:
+      - k-wiki-network
+
+  # MinIO Object Storage
+  minio:
+    image: minio/minio:latest
+    container_name: k-wiki-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+    volumes:
+      - minio_data:/data
+    networks:
+      - k-wiki-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  # MinIO Client - Initialize buckets
+  minio-init:
+    image: minio/mc:latest
+    container_name: k-wiki-minio-init
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set myminio http://minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD};
+      mc mb myminio/${MINIO_BUCKET_NAME} --ignore-existing;
+      mc anonymous set none myminio/${MINIO_BUCKET_NAME};
+      echo 'MinIO bucket ${MINIO_BUCKET_NAME} created and set to private';
+      exit 0;
+      "
+    networks:
+      - k-wiki-network
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: k-wiki-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - k-wiki-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # PostgreSQL - Initialize DataBases
+  postgres-init:
+    image: postgres:15-alpine
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+    networks:
+      - k-wiki-network
+    environment:
+      - PGPASSWORD=${POSTGRES_PASSWORD}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        psql -h postgres -U ${POSTGRES_USER} -d postgres <<-EOSQL
+          SELECT 'CREATE DATABASE keycloak'
+          WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'keycloak')\gexec
+          SELECT 'CREATE DATABASE k_wiki'
+          WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'k_wiki')\gexec
+        EOSQL
+        echo 'Databases created successfully'
+
+  # Keycloak Identity and Access Management
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0
+    container_name: k-wiki-keycloak
+    restart: unless-stopped
+    command: start-dev
+    environment:
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://postgres:5432/keycloak
+      - KC_DB_USERNAME=${POSTGRES_USER}
+      - KC_DB_PASSWORD=${POSTGRES_PASSWORD}
+      - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
+      - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
+      - KC_HOSTNAME_STRICT=false
+      - KC_PROXY=edge
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - k-wiki-network
+    healthcheck:
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/8080;echo -e 'GET /health/ready HTTP/1.1\r\nhost: http://localhost\r\nConnection: close\r\n\r\n' >&3;grep -q '200 OK' <&3"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # Nginx Gateway
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: registry.orb.local/k-wiki-nginx:latest
+    container_name: k-wiki-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - nginx_logs:/var/log/nginx
+    depends_on:
+      - app
+      - minio
+      - keycloak
+    networks:
+      - k-wiki-network
+
+networks:
+  k-wiki-network:
+    driver: bridge
+
+volumes:
+  minio_data:
+    driver: local
+  postgres_data:
+    driver: local
+  nginx_logs:
+    driver: local
