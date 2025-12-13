@@ -10,26 +10,28 @@ export default async function Home() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
-      <div className="w-full max-w-md px-8">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-              K-Wiki
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400">
-              Welcome to K-Wiki Knowledge Base
-            </p>
-          </div>
+    <div className="hero min-h-screen bg-base-200">
+      <div className="hero-content">
+        <div className="card w-full max-w-md bg-base-100 shadow-xl">
+          <div className="card-body">
+            <div className="text-center mb-4">
+              <h1 className="card-title text-4xl font-bold justify-center mb-2">
+                K-Wiki
+              </h1>
+              <p className="text-base-content/60">
+                Welcome to K-Wiki Knowledge Base
+              </p>
+            </div>
 
-          <div className="space-y-4">
-            <SignInButton />
-          </div>
+            <div className="space-y-4">
+              <SignInButton />
+            </div>
 
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Use your Keycloak account to sign in
-            </p>
+            <div className="text-center mt-4">
+              <p className="text-sm text-base-content/60">
+                Use your Keycloak account to sign in
+              </p>
+            </div>
           </div>
         </div>
       </div>
