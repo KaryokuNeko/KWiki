@@ -8,7 +8,7 @@ import { createKeycloakAdminClient } from '@/lib/keycloak-admin'
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
     // Check authentication
@@ -20,7 +20,7 @@ export async function GET(
       )
     }
 
-    const { userId } = params
+    const { userId } = await params
 
     if (!userId) {
       return NextResponse.json(
@@ -66,7 +66,7 @@ export async function GET(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
     // Check authentication
@@ -78,7 +78,7 @@ export async function DELETE(
       )
     }
 
-    const { userId } = params
+    const { userId } = await params
 
     if (!userId) {
       return NextResponse.json(
@@ -135,7 +135,7 @@ export async function DELETE(
  */
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
     // Check authentication
@@ -147,7 +147,7 @@ export async function PUT(
       )
     }
 
-    const { userId } = params
+    const { userId } = await params
 
     if (!userId) {
       return NextResponse.json(

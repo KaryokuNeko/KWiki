@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { XCircleIcon, CheckCircleIcon, InformationCircleIcon } from "@heroicons/react/24/outline"
 import { User } from "./UserManagement"
 
 interface ResetPasswordDialogProps {
@@ -92,36 +93,14 @@ export function ResetPasswordDialog({ isOpen, user, onClose, onSubmit }: ResetPa
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
             <div role="alert" className="alert alert-error">
-              <svg
-                className="h-6 w-6 shrink-0 stroke-current"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
+              <XCircleIcon className="h-6 w-6 shrink-0 stroke-current" />
               <span>{error}</span>
             </div>
           )}
 
           {success && (
             <div role="alert" className="alert alert-success">
-              <svg
-                className="h-6 w-6 shrink-0 stroke-current"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
+              <CheckCircleIcon className="h-6 w-6 shrink-0 stroke-current" />
               <span>Password reset successfully!</span>
             </div>
           )}
@@ -177,18 +156,7 @@ export function ResetPasswordDialog({ isOpen, user, onClose, onSubmit }: ResetPa
           </div>
 
           <div role="alert" className="alert alert-info">
-            <svg
-              className="h-6 w-6 shrink-0 stroke-current"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
+            <InformationCircleIcon className="h-6 w-6 shrink-0 stroke-current" />
             <span className="text-xs">
               This will reset the user's password immediately. If "Require password change on next login" is checked,
               the user will be prompted to change their password when they log in.

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { PlusIcon, XCircleIcon } from "@heroicons/react/24/outline"
 import { UserList } from "./UserList"
 import { CreateUserDialog } from "./CreateUserDialog"
 import { EditUserDialog } from "./EditUserDialog"
@@ -178,37 +179,14 @@ export function UserManagement() {
           onClick={() => setIsCreateDialogOpen(true)}
           className="btn btn-primary gap-2"
         >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
-          </svg>
+          <PlusIcon className="w-5 h-5" />
           Create User
         </button>
       </div>
 
       {error && (
         <div role="alert" className="alert alert-error">
-          <svg
-            className="h-6 w-6 shrink-0 stroke-current"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
+          <XCircleIcon className="h-6 w-6 shrink-0 stroke-current" />
           <span>{error}</span>
         </div>
       )}

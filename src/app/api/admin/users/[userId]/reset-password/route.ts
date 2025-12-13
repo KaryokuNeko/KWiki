@@ -14,7 +14,7 @@ import { createKeycloakAdminClient } from '@/lib/keycloak-admin'
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
     // Check authentication
@@ -26,7 +26,7 @@ export async function POST(
       )
     }
 
-    const { userId } = params
+    const { userId } = await params
 
     if (!userId) {
       return NextResponse.json(
