@@ -6,14 +6,24 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prisma:generate": "prisma generate --config=prisma.config.ts",
+    "prisma:migrate": "prisma migrate dev --config=prisma.config.ts",
+    "prisma:migrate:deploy": "prisma migrate deploy --config=prisma.config.ts",
+    "prisma:studio": "prisma studio --config=prisma.config.ts",
+    "prisma:reset": "prisma migrate reset --config=prisma.config.ts"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@prisma/adapter-pg": "^7.1.0",
+    "@prisma/client": "^7.1.0",
+    "@prisma/client-runtime-utils": "^7.1.0",
     "daisyui": "^5.5.13",
+    "minio": "^8.0.6",
     "next": "16.0.10",
     "next-auth": "5.0.0-beta.30",
     "pg": "^8.13.1",
+    "prisma": "^7.1.0",
     "react": "19.2.1",
     "react-dom": "19.2.1"
   },

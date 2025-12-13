@@ -23,6 +23,9 @@ export default async function DashboardPage() {
               </a>
             </li>
             <li>
+              <a href="/dashboard/profile">Profile</a>
+            </li>
+            <li>
               <a href="/dashboard/users">User Management</a>
             </li>
           </ul>

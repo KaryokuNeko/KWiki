@@ -50,3 +50,4 @@ nginx/logs/
 .idea
 
 CLAUDE.md
+/src/generated/prisma
