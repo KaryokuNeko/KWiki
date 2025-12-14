@@ -1,0 +1,27 @@
+{
+  "auth": {
+    "unauthorized": "Unauthorized",
+    "sessionExpired": "Session expired",
+    "userIdNotFound": "User ID not found in session"
+  },
+  "api": {
+    "MISSING_REQUIRED_FIELDS": "Missing required fields",
+    "INVALID_EMAIL": "Invalid email format",
+    "USER_USERNAME_EXISTS": "User with this username already exists",
+    "USER_EMAIL_EXISTS": "User with this email already exists",
+    "USER_NOT_FOUND": "User not found",
+    "PROFILE_NOT_FOUND": "Profile not found",
+    "PROFILE_EXISTS": "Profile already exists",
+    "NICKNAME_TOO_LONG": "Nickname is too long (max {max} characters)",
+    "NO_FIELDS_TO_UPDATE": "No fields to update",
+    "PROFILE_CREATE_FIRST": "Profile not found. Please create a profile first.",
+    "NO_FILE_PROVIDED": "No file provided",
+    "INVALID_FILE_TYPE": "Invalid file type. Only JPEG, PNG, GIF, and WebP images are allowed.",
+    "FILE_TOO_LARGE": "File too large. Maximum size is {max}MB.",
+    "PASSWORD_REQUIRED": "Password is required",
+    "PASSWORD_MIN_LENGTH": "Password must be at least {min} characters long",
+    "INVALID_LOCALE": "Invalid locale",
+    "FAILED": "Operation failed",
+    "UNKNOWN_ERROR": "Unknown error"
+  }
+}

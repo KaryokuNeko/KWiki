@@ -1,0 +1,35 @@
+{
+  "title": "User Profile",
+  "sections": {
+    "account": "Account Information",
+    "profile": "Profile Settings",
+    "avatar": "Avatar"
+  },
+  "fields": {
+    "username": "Username",
+    "email": "Email",
+    "nickname": "Nickname",
+    "avatarUrl": "Avatar URL"
+  },
+  "placeholders": {
+    "nickname": "Enter your display name",
+    "avatarUrl": "https://example.com/avatar.jpg"
+  },
+  "hints": {
+    "nicknameMaxLength": "Max {max} characters",
+    "avatarFileSize": "Max {max}MB (JPEG, PNG, GIF, WebP)"
+  },
+  "upload": {
+    "newAvatar": "Upload New Avatar",
+    "orEnterUrl": "Or enter avatar URL manually"
+  },
+  "messages": {
+    "loadFailed": "Failed to load profile",
+    "uploadSuccess": "Avatar uploaded successfully",
+    "uploadFailed": "Failed to upload avatar",
+    "saveFailed": "Failed to save profile",
+    "saveSuccess": "Profile updated successfully",
+    "invalidFileType": "Invalid file type. Only JPEG, PNG, GIF, and WebP images are allowed.",
+    "fileTooLarge": "File too large. Maximum size is {max}MB."
+  }
+}

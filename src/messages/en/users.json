@@ -1,0 +1,94 @@
+{
+  "title": "User Management",
+  "description": "Manage Keycloak users, create new accounts, and update user information.",
+  "createUser": "Create User",
+  "list": {
+    "headers": {
+      "username": "Username",
+      "email": "Email",
+      "name": "Name",
+      "status": "Status",
+      "emailVerified": "Email Verified",
+      "actions": "Actions"
+    },
+    "tooltips": {
+      "verified": "Email verified",
+      "notVerified": "Email not verified",
+      "edit": "Edit user",
+      "resetPassword": "Reset password",
+      "delete": "Delete user"
+    },
+    "empty": {
+      "title": "No users found",
+      "description": "Get started by creating a new user."
+    }
+  },
+  "createDialog": {
+    "title": "Create New User",
+    "fields": {
+      "username": "Username",
+      "email": "Email",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "password": "Password"
+    },
+    "placeholders": {
+      "username": "Enter username",
+      "email": "user@example.com",
+      "firstName": "John",
+      "lastName": "Doe",
+      "password": "Leave empty to skip"
+    },
+    "hints": {
+      "password": "Minimum 8 characters. Leave empty to set password later.",
+      "requirePasswordChange": "Require password change on first login",
+      "enabled": "Enable user account",
+      "emailVerified": "Mark email as verified"
+    },
+    "required": "*"
+  },
+  "editDialog": {
+    "title": "Edit User",
+    "hints": {
+      "usernameReadonly": "Username cannot be changed",
+      "passwordNote": "To reset the user's password, use the password reset button in the user list."
+    }
+  },
+  "deleteDialog": {
+    "title": "Delete User",
+    "warning": "Are you sure you want to delete this user? This action cannot be undone.",
+    "fields": {
+      "username": "Username",
+      "email": "Email",
+      "name": "Name"
+    }
+  },
+  "resetPasswordDialog": {
+    "title": "Reset Password",
+    "fields": {
+      "username": "Username",
+      "email": "Email",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password"
+    },
+    "placeholders": {
+      "newPassword": "Enter new password",
+      "confirmPassword": "Confirm new password"
+    },
+    "hints": {
+      "passwordMinLength": "Minimum 8 characters",
+      "requirePasswordChange": "Require password change on next login",
+      "description": "This will reset the user's password immediately. If \"Require password change on next login\" is checked, the user will be prompted to change their password when they log in."
+    },
+    "success": "Password reset successfully!",
+    "successButton": "Password Reset!"
+  },
+  "messages": {
+    "fetchFailed": "Failed to fetch users",
+    "createFailed": "Failed to create user",
+    "updateFailed": "Failed to update user",
+    "deleteFailed": "Failed to delete user",
+    "resetPasswordFailed": "Failed to reset password",
+    "unknownError": "Unknown error"
+  }
+}

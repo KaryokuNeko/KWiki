@@ -1,9 +1,12 @@
 import { redirect } from "next/navigation"
 import { auth } from "@/auth"
 import { SignInButton } from "./components/SignInButton"
+import { getTranslations } from 'next-intl/server'
 
 export default async function Home() {
   const session = await auth()
+  const t = await getTranslations('auth')
+  const tCommon = await getTranslations('common')
 
   if (session?.user) {
     redirect("/dashboard")
@@ -16,10 +19,10 @@ export default async function Home() {
           <div className="card-body">
             <div className="text-center mb-4">
               <h1 className="card-title text-4xl font-bold justify-center mb-2">
-                K-Wiki
+                {tCommon('app.name')}
               </h1>
               <p className="text-base-content/60">
-                Welcome to K-Wiki Knowledge Base
+                {t('welcome')}
               </p>
             </div>
 
@@ -29,7 +32,7 @@ export default async function Home() {
 
             <div className="text-center mt-4">
               <p className="text-sm text-base-content/60">
-                Use your Keycloak account to sign in
+                {t('instruction')}
               </p>
             </div>
           </div>

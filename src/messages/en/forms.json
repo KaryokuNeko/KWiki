@@ -1,0 +1,10 @@
+{
+  "validation": {
+    "required": "{field} is required",
+    "invalidEmail": "Invalid email format",
+    "tooLong": "{field} is too long (max {max} characters)",
+    "tooShort": "{field} is too short (min {min} characters)",
+    "passwordMismatch": "Passwords do not match",
+    "passwordMinLength": "Password must be at least {min} characters long"
+  }
+}

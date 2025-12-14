@@ -16,12 +16,13 @@ datasource db {
 // User Profile model
 // Stores additional user information that supplements Keycloak authentication
 model UserProfile {
-  id          Int      @id @default(autoincrement())
-  keycloakId  String   @unique @map("keycloak_id") @db.VarChar(255)
-  nickname    String?  @db.VarChar(100)
-  avatarUrl   String?  @map("avatar_url") @db.Text
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  id              Int      @id @default(autoincrement())
+  keycloakId      String   @unique @map("keycloak_id") @db.VarChar(255)
+  nickname        String?  @db.VarChar(100)
+  avatarUrl       String?  @map("avatar_url") @db.Text
+  preferredLocale String?  @map("preferred_locale") @db.VarChar(10)
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
 
   @@map("user_profiles")
   @@index([keycloakId])

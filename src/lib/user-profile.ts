@@ -13,11 +13,13 @@ export interface CreateUserProfileInput {
   keycloakId: string
   nickname?: string
   avatarUrl?: string
+  preferredLocale?: string
 }
 
 export interface UpdateUserProfileInput {
   nickname?: string
   avatarUrl?: string
+  preferredLocale?: string
 }
 
 /**
@@ -50,7 +52,8 @@ export async function createUserProfile(data: CreateUserProfileInput): Promise<U
       data: {
         keycloakId: data.keycloakId,
         nickname: data.nickname,
-        avatarUrl: data.avatarUrl
+        avatarUrl: data.avatarUrl,
+        preferredLocale: data.preferredLocale
       }
     })
     return profile
@@ -76,7 +79,8 @@ export async function updateUserProfile(
       where: { keycloakId },
       data: {
         nickname: data.nickname,
-        avatarUrl: data.avatarUrl
+        avatarUrl: data.avatarUrl,
+        preferredLocale: data.preferredLocale
       }
     })
     return profile
@@ -105,7 +109,8 @@ export async function getOrCreateUserProfile(
       profile = await createUserProfile({
         keycloakId,
         nickname: defaultData?.nickname,
-        avatarUrl: defaultData?.avatarUrl
+        avatarUrl: defaultData?.avatarUrl,
+        preferredLocale: defaultData?.preferredLocale
       })
     }
 

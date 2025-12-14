@@ -1,0 +1,42 @@
+{
+  "app": {
+    "name": "K-Wiki",
+    "tagline": "Knowledge Base Management System"
+  },
+  "nav": {
+    "home": "Home",
+    "profile": "Profile",
+    "userManagement": "User Management"
+  },
+  "buttons": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "upload": "Upload",
+    "close": "Close",
+    "confirm": "Confirm",
+    "update": "Update",
+    "saveChanges": "Save Changes"
+  },
+  "status": {
+    "loading": "Loading...",
+    "saving": "Saving...",
+    "uploading": "Uploading...",
+    "creating": "Creating...",
+    "updating": "Updating...",
+    "deleting": "Deleting...",
+    "resetting": "Resetting..."
+  },
+  "common": {
+    "na": "N/A",
+    "active": "Active",
+    "disabled": "Disabled",
+    "emailVerified": "Email verified",
+    "emailNotVerified": "Email not verified",
+    "created": "Created",
+    "lastUpdated": "Last updated",
+    "actions": "Actions"
+  }
+}

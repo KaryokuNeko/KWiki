@@ -1,0 +1,27 @@
+{
+  "auth": {
+    "unauthorized": "未授权",
+    "sessionExpired": "会话已过期",
+    "userIdNotFound": "会话中未找到用户 ID"
+  },
+  "api": {
+    "MISSING_REQUIRED_FIELDS": "缺少必填字段",
+    "INVALID_EMAIL": "邮箱格式无效",
+    "USER_USERNAME_EXISTS": "该用户名已被使用",
+    "USER_EMAIL_EXISTS": "该邮箱已被使用",
+    "USER_NOT_FOUND": "未找到用户",
+    "PROFILE_NOT_FOUND": "未找到用户资料",
+    "PROFILE_EXISTS": "资料已存在",
+    "NICKNAME_TOO_LONG": "昵称过长（最多 {max} 个字符）",
+    "NO_FIELDS_TO_UPDATE": "没有字段需要更新",
+    "PROFILE_CREATE_FIRST": "未找到资料。请先创建资料。",
+    "NO_FILE_PROVIDED": "未提供文件",
+    "INVALID_FILE_TYPE": "无效的文件类型。仅允许 JPEG、PNG、GIF 和 WebP 图片。",
+    "FILE_TOO_LARGE": "文件过大。最大大小为 {max}MB。",
+    "PASSWORD_REQUIRED": "密码为必填项",
+    "PASSWORD_MIN_LENGTH": "密码必须至少 {min} 个字符",
+    "INVALID_LOCALE": "无效的语言设置",
+    "FAILED": "操作失败",
+    "UNKNOWN_ERROR": "未知错误"
+  }
+}

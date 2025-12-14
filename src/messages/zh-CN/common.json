@@ -1,0 +1,42 @@
+{
+  "app": {
+    "name": "K-Wiki",
+    "tagline": "知识库管理系统"
+  },
+  "nav": {
+    "home": "首页",
+    "profile": "个人资料",
+    "userManagement": "用户管理"
+  },
+  "buttons": {
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "create": "创建",
+    "upload": "上传",
+    "close": "关闭",
+    "confirm": "确认",
+    "update": "更新",
+    "saveChanges": "保存更改"
+  },
+  "status": {
+    "loading": "加载中...",
+    "saving": "保存中...",
+    "uploading": "上传中...",
+    "creating": "创建中...",
+    "updating": "更新中...",
+    "deleting": "删除中...",
+    "resetting": "重置中..."
+  },
+  "common": {
+    "na": "不适用",
+    "active": "活跃",
+    "disabled": "已禁用",
+    "emailVerified": "邮箱已验证",
+    "emailNotVerified": "邮箱未验证",
+    "created": "创建时间",
+    "lastUpdated": "最后更新",
+    "actions": "操作"
+  }
+}

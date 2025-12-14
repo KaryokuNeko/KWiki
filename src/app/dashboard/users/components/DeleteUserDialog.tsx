@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 import { ExclamationTriangleIcon, XCircleIcon } from "@heroicons/react/24/outline"
 import { User } from "./UserManagement"
 
@@ -12,6 +13,8 @@ interface DeleteUserDialogProps {
 }
 
 export function DeleteUserDialog({ isOpen, user, onClose, onConfirm }: DeleteUserDialogProps) {
+  const t = useTranslations('users')
+  const tCommon = useTranslations('common')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -37,28 +40,28 @@ export function DeleteUserDialog({ isOpen, user, onClose, onConfirm }: DeleteUse
       <div className="modal-box">
         <h3 className="font-bold text-lg flex items-center gap-2 text-error">
           <ExclamationTriangleIcon className="w-6 h-6" />
-          Delete User
+          {t('deleteDialog.title')}
         </h3>
 
         <div className="py-4">
           <p className="text-base-content/80 mb-4">
-            Are you sure you want to delete this user? This action cannot be undone.
+            {t('deleteDialog.warning')}
           </p>
 
           <div className="card bg-base-200">
             <div className="card-body py-3 px-4">
               <dl className="space-y-2">
                 <div>
-                  <dt className="text-xs font-medium text-base-content/60">Username</dt>
+                  <dt className="text-xs font-medium text-base-content/60">{t('deleteDialog.fields.username')}</dt>
                   <dd className="text-sm font-semibold">{user.username}</dd>
                 </div>
                 <div>
-                  <dt className="text-xs font-medium text-base-content/60">Email</dt>
+                  <dt className="text-xs font-medium text-base-content/60">{t('deleteDialog.fields.email')}</dt>
                   <dd className="text-sm">{user.email}</dd>
                 </div>
                 {(user.firstName || user.lastName) && (
                   <div>
-                    <dt className="text-xs font-medium text-base-content/60">Name</dt>
+                    <dt className="text-xs font-medium text-base-content/60">{t('deleteDialog.fields.name')}</dt>
                     <dd className="text-sm">
                       {`${user.firstName || ""} ${user.lastName || ""}`.trim()}
                     </dd>
@@ -83,7 +86,7 @@ export function DeleteUserDialog({ isOpen, user, onClose, onConfirm }: DeleteUse
             disabled={loading}
             className="btn"
           >
-            Cancel
+            {tCommon('buttons.cancel')}
           </button>
           <button
             type="button"
@@ -94,10 +97,10 @@ export function DeleteUserDialog({ isOpen, user, onClose, onConfirm }: DeleteUse
             {loading ? (
               <>
                 <span className="loading loading-spinner"></span>
-                Deleting...
+                {tCommon('status.deleting')}
               </>
             ) : (
-              "Delete User"
+              tCommon('buttons.delete')
             )}
           </button>
         </div>

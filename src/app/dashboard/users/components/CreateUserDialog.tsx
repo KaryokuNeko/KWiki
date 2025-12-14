@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { XCircleIcon } from "@heroicons/react/24/outline"
+import { useTranslations } from "next-intl"
 
 interface CreateUserDialogProps {
   isOpen: boolean
@@ -19,6 +20,10 @@ interface CreateUserDialogProps {
 }
 
 export function CreateUserDialog({ isOpen, onClose, onSubmit }: CreateUserDialogProps) {
+  const t = useTranslations('users')
+  const tCommon = useTranslations('common')
+  const tForms = useTranslations('forms')
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -63,7 +68,7 @@ export function CreateUserDialog({ isOpen, onClose, onSubmit }: CreateUserDialog
       })
       onClose()
     } else {
-      setError(result.error || "Failed to create user")
+      setError(result.error || t('messages.createFailed'))
     }
   }
 
@@ -94,7 +99,7 @@ export function CreateUserDialog({ isOpen, onClose, onSubmit }: CreateUserDialog
             ✕
           </button>
         </form>
-        <h3 className="font-bold text-lg mb-4">Create New User</h3>
+        <h3 className="font-bold text-lg mb-4">{t('createDialog.title')}</h3>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
@@ -107,7 +112,7 @@ export function CreateUserDialog({ isOpen, onClose, onSubmit }: CreateUserDialog
           <div className="form-control">
             <label className="label">
               <span className="label-text">
-                Username <span className="text-error">*</span>
+                {t('createDialog.fields.username')} <span className="text-error">{t('createDialog.required')}</span>
               </span>
             </label>
             <input
@@ -116,14 +121,14 @@ export function CreateUserDialog({ isOpen, onClose, onSubmit }: CreateUserDialog
               value={formData.username}
               onChange={(e) => setFormData({ ...formData, username: e.target.value })}
               className="input input-bordered"
-              placeholder="Enter username"
+              placeholder={t('createDialog.placeholders.username')}
             />
           </div>
 
           <div className="form-control">
             <label className="label">
               <span className="label-text">
-                Email <span className="text-error">*</span>
+                {t('createDialog.fields.email')} <span className="text-error">{t('createDialog.required')}</span>
               </span>
             </label>
             <input
@@ -132,52 +137,52 @@ export function CreateUserDialog({ isOpen, onClose, onSubmit }: CreateUserDialog
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="input input-bordered"
-              placeholder="user@example.com"
+              placeholder={t('createDialog.placeholders.email')}
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="form-control">
               <label className="label">
-                <span className="label-text">First Name</span>
+                <span className="label-text">{t('createDialog.fields.firstName')}</span>
               </label>
               <input
                 type="text"
                 value={formData.firstName}
                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                 className="input input-bordered"
-                placeholder="John"
+                placeholder={t('createDialog.placeholders.firstName')}
               />
             </div>
 
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Last Name</span>
+                <span className="label-text">{t('createDialog.fields.lastName')}</span>
               </label>
               <input
                 type="text"
                 value={formData.lastName}
                 onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                 className="input input-bordered"
-                placeholder="Doe"
+                placeholder={t('createDialog.placeholders.lastName')}
               />
             </div>
           </div>
 
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Password</span>
+              <span className="label-text">{t('createDialog.fields.password')}</span>
             </label>
             <input
               type="password"
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               className="input input-bordered"
-              placeholder="Leave empty to skip"
+              placeholder={t('createDialog.placeholders.password')}
             />
             <label className="label">
               <span className="label-text-alt">
-                Minimum 8 characters. Leave empty to set password later.
+                {t('createDialog.hints.password')}
               </span>
             </label>
           </div>
@@ -191,7 +196,7 @@ export function CreateUserDialog({ isOpen, onClose, onSubmit }: CreateUserDialog
                   onChange={(e) => setFormData({ ...formData, temporary: e.target.checked })}
                   className="checkbox checkbox-primary"
                 />
-                <span className="label-text">Require password change on first login</span>
+                <span className="label-text">{t('createDialog.hints.requirePasswordChange')}</span>
               </label>
             </div>
           )}
@@ -204,7 +209,7 @@ export function CreateUserDialog({ isOpen, onClose, onSubmit }: CreateUserDialog
                 onChange={(e) => setFormData({ ...formData, enabled: e.target.checked })}
                 className="checkbox checkbox-primary"
               />
-              <span className="label-text">Enable user account</span>
+              <span className="label-text">{t('createDialog.hints.enabled')}</span>
             </label>
           </div>
 
@@ -216,7 +221,7 @@ export function CreateUserDialog({ isOpen, onClose, onSubmit }: CreateUserDialog
                 onChange={(e) => setFormData({ ...formData, emailVerified: e.target.checked })}
                 className="checkbox checkbox-primary"
               />
-              <span className="label-text">Mark email as verified</span>
+              <span className="label-text">{t('createDialog.hints.emailVerified')}</span>
             </label>
           </div>
 
@@ -227,7 +232,7 @@ export function CreateUserDialog({ isOpen, onClose, onSubmit }: CreateUserDialog
               disabled={loading}
               className="btn"
             >
-              Cancel
+              {tCommon('buttons.cancel')}
             </button>
             <button
               type="submit"
@@ -237,10 +242,10 @@ export function CreateUserDialog({ isOpen, onClose, onSubmit }: CreateUserDialog
               {loading ? (
                 <>
                   <span className="loading loading-spinner"></span>
-                  Creating...
+                  {tCommon('status.creating')}
                 </>
               ) : (
-                "Create User"
+                tCommon('buttons.create')
               )}
             </button>
           </div>

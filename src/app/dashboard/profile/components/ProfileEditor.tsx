@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
+import { useTranslations } from 'next-intl'
 import { XCircleIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
 
 interface UserProfile {
@@ -15,6 +16,8 @@ interface UserProfile {
 
 export function ProfileEditor() {
   const { data: session } = useSession()
+  const t = useTranslations('profile')
+  const tCommon = useTranslations('common')
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -51,10 +54,10 @@ export function ProfileEditor() {
         setNickname('')
         setAvatarUrl('')
       } else {
-        setError(data.error || 'Failed to load profile')
+        setError(data.error || t('messages.loadFailed'))
       }
     } catch (err) {
-      setError('Failed to load profile')
+      setError(t('messages.loadFailed'))
       console.error('Error fetching profile:', err)
     } finally {
       setLoading(false)
@@ -72,14 +75,14 @@ export function ProfileEditor() {
     // Validate file type
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp']
     if (!allowedTypes.includes(file.type)) {
-      setError('Invalid file type. Only JPEG, PNG, GIF, and WebP images are allowed.')
+      setError(t('messages.invalidFileType'))
       return
     }
 
     // Validate file size (max 5MB)
     const maxSize = 5 * 1024 * 1024
     if (file.size > maxSize) {
-      setError('File too large. Maximum size is 5MB.')
+      setError(t('messages.fileTooLarge', { max: 5 }))
       return
     }
 
@@ -115,13 +118,13 @@ export function ProfileEditor() {
         setAvatarUrl(data.url)
         setSelectedFile(null)
         setPreviewUrl(null)
-        setSuccess('Avatar uploaded successfully')
+        setSuccess(t('messages.uploadSuccess'))
         setTimeout(() => setSuccess(null), 3000)
       } else {
-        setError(data.error || 'Failed to upload avatar')
+        setError(data.error || t('messages.uploadFailed'))
       }
     } catch (err) {
-      setError('Failed to upload avatar')
+      setError(t('messages.uploadFailed'))
       console.error('Error uploading avatar:', err)
     } finally {
       setUploading(false)
@@ -151,15 +154,15 @@ export function ProfileEditor() {
 
       if (response.ok && data.success) {
         setProfile(data.profile)
-        setSuccess(data.message || 'Profile updated successfully')
+        setSuccess(data.message || t('messages.saveSuccess'))
 
         // Clear success message after 3 seconds
         setTimeout(() => setSuccess(null), 3000)
       } else {
-        setError(data.error || 'Failed to save profile')
+        setError(data.error || t('messages.saveFailed'))
       }
     } catch (err) {
-      setError('Failed to save profile')
+      setError(t('messages.saveFailed'))
       console.error('Error saving profile:', err)
     } finally {
       setSaving(false)
@@ -178,26 +181,26 @@ export function ProfileEditor() {
     <div className="space-y-6">
       {/* Display Keycloak info (read-only) */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold">Account Information</h3>
+        <h3 className="text-lg font-semibold">{t('sections.account')}</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Username</span>
+              <span className="label-text">{t('fields.username')}</span>
             </label>
             <input
               type="text"
-              value={session?.user?.name || 'N/A'}
+              value={session?.user?.name || tCommon('common.na')}
               disabled
               className="input input-bordered bg-base-200"
             />
           </div>
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Email</span>
+              <span className="label-text">{t('fields.email')}</span>
             </label>
             <input
               type="text"
-              value={session?.user?.email || 'N/A'}
+              value={session?.user?.email || tCommon('common.na')}
               disabled
               className="input input-bordered bg-base-200"
             />
@@ -209,11 +212,11 @@ export function ProfileEditor() {
 
       {/* Editable profile form */}
       <form onSubmit={handleSubmit} className="space-y-4">
-        <h3 className="text-lg font-semibold">Profile Settings</h3>
+        <h3 className="text-lg font-semibold">{t('sections.profile')}</h3>
 
         {/* Avatar section */}
         <div className="space-y-4">
-          <h4 className="font-medium">Avatar</h4>
+          <h4 className="font-medium">{t('sections.avatar')}</h4>
 
           {/* Current avatar or preview */}
           <div className="flex items-center space-x-4">
@@ -229,8 +232,8 @@ export function ProfileEditor() {
           {/* File upload */}
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Upload New Avatar</span>
-              <span className="label-text-alt">Max 5MB (JPEG, PNG, GIF, WebP)</span>
+              <span className="label-text">{t('upload.newAvatar')}</span>
+              <span className="label-text-alt">{t('hints.avatarFileSize', { max: 5 })}</span>
             </label>
             <div className="flex gap-2">
               <input
@@ -249,10 +252,10 @@ export function ProfileEditor() {
                   {uploading ? (
                     <>
                       <span className="loading loading-spinner loading-sm"></span>
-                      Uploading...
+                      {tCommon('status.uploading')}
                     </>
                   ) : (
-                    'Upload'
+                    tCommon('buttons.upload')
                   )}
                 </button>
               )}
@@ -263,14 +266,14 @@ export function ProfileEditor() {
           <div className="collapse collapse-arrow bg-base-200">
             <input type="checkbox" />
             <div className="collapse-title text-sm font-medium">
-              Or enter avatar URL manually
+              {t('upload.orEnterUrl')}
             </div>
             <div className="collapse-content">
               <input
                 type="url"
                 value={avatarUrl}
                 onChange={(e) => setAvatarUrl(e.target.value)}
-                placeholder="https://example.com/avatar.jpg"
+                placeholder={t('placeholders.avatarUrl')}
                 className="input input-bordered w-full"
               />
             </div>
@@ -281,15 +284,15 @@ export function ProfileEditor() {
 
         <div className="form-control">
           <label className="label">
-            <span className="label-text">Nickname</span>
-            <span className="label-text-alt">Max 100 characters</span>
+            <span className="label-text">{t('fields.nickname')}</span>
+            <span className="label-text-alt">{t('hints.nicknameMaxLength', { max: 100 })}</span>
           </label>
           <input
             type="text"
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
             maxLength={100}
-            placeholder="Enter your display name"
+            placeholder={t('placeholders.nickname')}
             className="input input-bordered"
           />
         </div>
@@ -319,10 +322,10 @@ export function ProfileEditor() {
             {saving ? (
               <>
                 <span className="loading loading-spinner"></span>
-                Saving...
+                {tCommon('status.saving')}
               </>
             ) : (
-              'Save Changes'
+              tCommon('buttons.saveChanges')
             )}
           </button>
         </div>
@@ -331,8 +334,8 @@ export function ProfileEditor() {
       {/* Profile metadata */}
       {profile && (
         <div className="text-sm text-base-content/60 pt-4 border-t">
-          <p>Created: {new Date(profile.createdAt).toLocaleString()}</p>
-          <p>Last updated: {new Date(profile.updatedAt).toLocaleString()}</p>
+          <p>{tCommon('common.created')}: {new Date(profile.createdAt).toLocaleString()}</p>
+          <p>{tCommon('common.lastUpdated')}: {new Date(profile.updatedAt).toLocaleString()}</p>
         </div>
       )}
     </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 import { XCircleIcon, CheckCircleIcon, InformationCircleIcon } from "@heroicons/react/24/outline"
 import { User } from "./UserManagement"
 
@@ -12,6 +13,9 @@ interface ResetPasswordDialogProps {
 }
 
 export function ResetPasswordDialog({ isOpen, user, onClose, onSubmit }: ResetPasswordDialogProps) {
+  const t = useTranslations('users')
+  const tCommon = useTranslations('common')
+  const tForms = useTranslations('forms')
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [temporary, setTemporary] = useState(false)
@@ -27,12 +31,12 @@ export function ResetPasswordDialog({ isOpen, user, onClose, onSubmit }: ResetPa
     setSuccess(false)
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match")
+      setError(tForms('validation.passwordMismatch'))
       return
     }
 
     if (password.length < 8) {
-      setError("Password must be at least 8 characters long")
+      setError(tForms('validation.passwordMinLength', { min: 8 }))
       return
     }
 
@@ -73,17 +77,17 @@ export function ResetPasswordDialog({ isOpen, user, onClose, onSubmit }: ResetPa
             ✕
           </button>
         </form>
-        <h3 className="font-bold text-lg mb-4">Reset Password</h3>
+        <h3 className="font-bold text-lg mb-4">{t('resetPasswordDialog.title')}</h3>
 
         <div className="card bg-base-200 mb-4">
           <div className="card-body py-3 px-4">
             <dl className="space-y-2">
               <div>
-                <dt className="text-xs font-medium text-base-content/60">Username</dt>
+                <dt className="text-xs font-medium text-base-content/60">{t('resetPasswordDialog.fields.username')}</dt>
                 <dd className="text-sm font-semibold">{user.username}</dd>
               </div>
               <div>
-                <dt className="text-xs font-medium text-base-content/60">Email</dt>
+                <dt className="text-xs font-medium text-base-content/60">{t('resetPasswordDialog.fields.email')}</dt>
                 <dd className="text-sm">{user.email}</dd>
               </div>
             </dl>
@@ -101,14 +105,14 @@ export function ResetPasswordDialog({ isOpen, user, onClose, onSubmit }: ResetPa
           {success && (
             <div role="alert" className="alert alert-success">
               <CheckCircleIcon className="h-6 w-6 shrink-0 stroke-current" />
-              <span>Password reset successfully!</span>
+              <span>{t('resetPasswordDialog.success')}</span>
             </div>
           )}
 
           <div className="form-control">
             <label className="label">
               <span className="label-text">
-                New Password <span className="text-error">*</span>
+                {t('resetPasswordDialog.fields.newPassword')} <span className="text-error">*</span>
               </span>
             </label>
             <input
@@ -118,17 +122,17 @@ export function ResetPasswordDialog({ isOpen, user, onClose, onSubmit }: ResetPa
               onChange={(e) => setPassword(e.target.value)}
               disabled={success}
               className="input input-bordered"
-              placeholder="Enter new password"
+              placeholder={t('resetPasswordDialog.placeholders.newPassword')}
             />
             <label className="label">
-              <span className="label-text-alt">Minimum 8 characters</span>
+              <span className="label-text-alt">{t('resetPasswordDialog.hints.passwordMinLength')}</span>
             </label>
           </div>
 
           <div className="form-control">
             <label className="label">
               <span className="label-text">
-                Confirm Password <span className="text-error">*</span>
+                {t('resetPasswordDialog.fields.confirmPassword')} <span className="text-error">*</span>
               </span>
             </label>
             <input
@@ -138,7 +142,7 @@ export function ResetPasswordDialog({ isOpen, user, onClose, onSubmit }: ResetPa
               onChange={(e) => setConfirmPassword(e.target.value)}
               disabled={success}
               className="input input-bordered"
-              placeholder="Confirm new password"
+              placeholder={t('resetPasswordDialog.placeholders.confirmPassword')}
             />
           </div>
 
@@ -151,15 +155,14 @@ export function ResetPasswordDialog({ isOpen, user, onClose, onSubmit }: ResetPa
                 disabled={success}
                 className="checkbox checkbox-primary"
               />
-              <span className="label-text">Require password change on next login</span>
+              <span className="label-text">{t('resetPasswordDialog.hints.requirePasswordChange')}</span>
             </label>
           </div>
 
           <div role="alert" className="alert alert-info">
             <InformationCircleIcon className="h-6 w-6 shrink-0 stroke-current" />
             <span className="text-xs">
-              This will reset the user's password immediately. If "Require password change on next login" is checked,
-              the user will be prompted to change their password when they log in.
+              {t('resetPasswordDialog.hints.description')}
             </span>
           </div>
 
@@ -170,7 +173,7 @@ export function ResetPasswordDialog({ isOpen, user, onClose, onSubmit }: ResetPa
               disabled={loading}
               className="btn"
             >
-              {success ? "Close" : "Cancel"}
+              {success ? tCommon('buttons.close') : tCommon('buttons.cancel')}
             </button>
             <button
               type="submit"
@@ -180,12 +183,12 @@ export function ResetPasswordDialog({ isOpen, user, onClose, onSubmit }: ResetPa
               {loading ? (
                 <>
                   <span className="loading loading-spinner"></span>
-                  Resetting...
+                  {tCommon('status.resetting')}
                 </>
               ) : success ? (
-                "Password Reset!"
+                t('resetPasswordDialog.successButton')
               ) : (
-                "Reset Password"
+                t('resetPasswordDialog.title')
               )}
             </button>
           </div>

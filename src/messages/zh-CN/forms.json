@@ -1,0 +1,10 @@
+{
+  "validation": {
+    "required": "{field}为必填项",
+    "invalidEmail": "邮箱格式无效",
+    "tooLong": "{field}过长（最多 {max} 个字符）",
+    "tooShort": "{field}过短（最少 {min} 个字符）",
+    "passwordMismatch": "密码不匹配",
+    "passwordMinLength": "密码必须至少 {min} 个字符"
+  }
+}

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { XCircleIcon, InformationCircleIcon } from "@heroicons/react/24/outline"
+import { useTranslations } from "next-intl"
 import { User } from "./UserManagement"
 
 interface EditUserDialogProps {
@@ -21,6 +22,8 @@ interface EditUserDialogProps {
 }
 
 export function EditUserDialog({ isOpen, user, onClose, onSubmit }: EditUserDialogProps) {
+  const t = useTranslations('users')
+  const tCommon = useTranslations('common')
   const [formData, setFormData] = useState({
     email: user.email,
     firstName: user.firstName || "",
@@ -82,7 +85,7 @@ export function EditUserDialog({ isOpen, user, onClose, onSubmit }: EditUserDial
             ✕
           </button>
         </form>
-        <h3 className="font-bold text-lg mb-4">Edit User</h3>
+        <h3 className="font-bold text-lg mb-4">{t('editDialog.title')}</h3>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
@@ -104,7 +107,7 @@ export function EditUserDialog({ isOpen, user, onClose, onSubmit }: EditUserDial
             />
             <label className="label">
               <span className="label-text-alt text-base-content/60">
-                Username cannot be changed
+                {t('editDialog.hints.usernameReadonly')}
               </span>
             </label>
           </div>
@@ -112,7 +115,7 @@ export function EditUserDialog({ isOpen, user, onClose, onSubmit }: EditUserDial
           <div className="form-control">
             <label className="label">
               <span className="label-text">
-                Email <span className="text-error">*</span>
+                {t('createDialog.fields.email')} <span className="text-error">*</span>
               </span>
             </label>
             <input
@@ -127,7 +130,7 @@ export function EditUserDialog({ isOpen, user, onClose, onSubmit }: EditUserDial
           <div className="grid grid-cols-2 gap-4">
             <div className="form-control">
               <label className="label">
-                <span className="label-text">First Name</span>
+                <span className="label-text">{t('createDialog.fields.firstName')}</span>
               </label>
               <input
                 type="text"
@@ -139,7 +142,7 @@ export function EditUserDialog({ isOpen, user, onClose, onSubmit }: EditUserDial
 
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Last Name</span>
+                <span className="label-text">{t('createDialog.fields.lastName')}</span>
               </label>
               <input
                 type="text"
@@ -158,7 +161,7 @@ export function EditUserDialog({ isOpen, user, onClose, onSubmit }: EditUserDial
                 onChange={(e) => setFormData({ ...formData, enabled: e.target.checked })}
                 className="checkbox checkbox-primary"
               />
-              <span className="label-text">Enable user account</span>
+              <span className="label-text">{t('createDialog.hints.enabled')}</span>
             </label>
           </div>
 
@@ -170,13 +173,13 @@ export function EditUserDialog({ isOpen, user, onClose, onSubmit }: EditUserDial
                 onChange={(e) => setFormData({ ...formData, emailVerified: e.target.checked })}
                 className="checkbox checkbox-primary"
               />
-              <span className="label-text">Mark email as verified</span>
+              <span className="label-text">{t('createDialog.hints.emailVerified')}</span>
             </label>
           </div>
 
           <div role="alert" className="alert alert-info">
             <InformationCircleIcon className="h-6 w-6 shrink-0 stroke-current" />
-            <span>To reset the user's password, use the password reset button in the user list.</span>
+            <span>{t('editDialog.hints.passwordNote')}</span>
           </div>
 
           <div className="modal-action">
@@ -186,7 +189,7 @@ export function EditUserDialog({ isOpen, user, onClose, onSubmit }: EditUserDial
               disabled={loading}
               className="btn"
             >
-              Cancel
+              {tCommon('buttons.cancel')}
             </button>
             <button
               type="submit"
@@ -196,10 +199,12 @@ export function EditUserDialog({ isOpen, user, onClose, onSubmit }: EditUserDial
               {loading ? (
                 <>
                   <span className="loading loading-spinner"></span>
-                  Updating...
+                  {tCommon('status.updating')}
                 </>
               ) : (
-                "Update User"
+                <>
+                  {tCommon('buttons.update')} {t('editDialog.title')}
+                </>
               )}
             </button>
           </div>

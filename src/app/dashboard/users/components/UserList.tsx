@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 import {
   UserGroupIcon,
   PencilSquareIcon,
@@ -31,6 +32,8 @@ export function UserList({
   onResetPassword,
   onRefresh,
 }: UserListProps) {
+  const t = useTranslations('users')
+  const tCommon = useTranslations('common')
   const [resetPasswordUser, setResetPasswordUser] = useState<User | null>(null)
 
   if (loading) {
@@ -48,9 +51,9 @@ export function UserList({
       <div className="card bg-base-100 shadow-xl">
         <div className="card-body items-center text-center">
           <UserGroupIcon className="w-16 h-16 text-base-content/30" />
-          <h3 className="card-title">No users found</h3>
+          <h3 className="card-title">{t('list.empty.title')}</h3>
           <p className="text-base-content/60">
-            Get started by creating a new user.
+            {t('list.empty.description')}
           </p>
         </div>
       </div>
@@ -64,12 +67,12 @@ export function UserList({
           <table className="table">
             <thead>
               <tr>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Email Verified</th>
-                <th className="text-right">Actions</th>
+                <th>{t('list.headers.username')}</th>
+                <th>{t('list.headers.email')}</th>
+                <th>{t('list.headers.name')}</th>
+                <th>{t('list.headers.status')}</th>
+                <th>{t('list.headers.emailVerified')}</th>
+                <th className="text-right">{t('list.headers.actions')}</th>
               </tr>
             </thead>
             <tbody>
@@ -88,18 +91,18 @@ export function UserList({
                   </td>
                   <td>
                     {user.enabled ? (
-                      <span className="badge badge-success badge-sm">Active</span>
+                      <span className="badge badge-success badge-sm">{tCommon('common.active')}</span>
                     ) : (
-                      <span className="badge badge-error badge-sm">Disabled</span>
+                      <span className="badge badge-error badge-sm">{tCommon('common.disabled')}</span>
                     )}
                   </td>
                   <td>
                     {user.emailVerified ? (
-                      <div className="tooltip" data-tip="Email verified">
+                      <div className="tooltip" data-tip={t('list.tooltips.verified')}>
                         <CheckCircleIconSolid className="w-5 h-5 text-success" />
                       </div>
                     ) : (
-                      <div className="tooltip" data-tip="Email not verified">
+                      <div className="tooltip" data-tip={t('list.tooltips.notVerified')}>
                         <XCircleIconSolid className="w-5 h-5 text-base-content/30" />
                       </div>
                     )}
@@ -109,21 +112,21 @@ export function UserList({
                       <button
                         onClick={() => onEdit(user)}
                         className="btn btn-ghost btn-xs"
-                        title="Edit user"
+                        title={t('list.tooltips.edit')}
                       >
                         <PencilSquareIcon className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => setResetPasswordUser(user)}
                         className="btn btn-ghost btn-xs text-warning"
-                        title="Reset password"
+                        title={t('list.tooltips.resetPassword')}
                       >
                         <KeyIcon className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => onDelete(user)}
                         className="btn btn-ghost btn-xs text-error"
-                        title="Delete user"
+                        title={t('list.tooltips.delete')}
                       >
                         <TrashIcon className="w-4 h-4" />
                       </button>

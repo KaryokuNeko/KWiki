@@ -1,0 +1,35 @@
+{
+  "title": "用户资料",
+  "sections": {
+    "account": "账户信息",
+    "profile": "个人设置",
+    "avatar": "头像"
+  },
+  "fields": {
+    "username": "用户名",
+    "email": "邮箱",
+    "nickname": "昵称",
+    "avatarUrl": "头像链接"
+  },
+  "placeholders": {
+    "nickname": "请输入您的显示名称",
+    "avatarUrl": "https://example.com/avatar.jpg"
+  },
+  "hints": {
+    "nicknameMaxLength": "最多 {max} 个字符",
+    "avatarFileSize": "最大 {max}MB（支持 JPEG、PNG、GIF、WebP）"
+  },
+  "upload": {
+    "newAvatar": "上传新头像",
+    "orEnterUrl": "或手动输入头像链接"
+  },
+  "messages": {
+    "loadFailed": "加载资料失败",
+    "uploadSuccess": "头像上传成功",
+    "uploadFailed": "上传头像失败",
+    "saveFailed": "保存资料失败",
+    "saveSuccess": "资料更新成功",
+    "invalidFileType": "无效的文件类型。仅允许 JPEG、PNG、GIF 和 WebP 图片。",
+    "fileTooLarge": "文件过大。最大大小为 {max}MB。"
+  }
+}

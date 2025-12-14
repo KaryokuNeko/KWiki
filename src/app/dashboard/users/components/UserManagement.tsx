@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useTranslations } from "next-intl"
 import { PlusIcon, XCircleIcon } from "@heroicons/react/24/outline"
 import { UserList } from "./UserList"
 import { CreateUserDialog } from "./CreateUserDialog"
@@ -18,6 +19,7 @@ export interface User {
 }
 
 export function UserManagement() {
+  const t = useTranslations('users')
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -33,13 +35,13 @@ export function UserManagement() {
       const response = await fetch("/api/admin/users")
 
       if (!response.ok) {
-        throw new Error("Failed to fetch users")
+        throw new Error(t('messages.fetchFailed'))
       }
 
       const data = await response.json()
       setUsers(data.users || [])
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error")
+      setError(err instanceof Error ? err.message : t('messages.unknownError'))
     } finally {
       setLoading(false)
     }
@@ -70,7 +72,7 @@ export function UserManagement() {
 
       if (!response.ok) {
         const error = await response.json()
-        throw new Error(error.error || "Failed to create user")
+        throw new Error(error.error || t('messages.createFailed'))
       }
 
       await fetchUsers()
@@ -79,7 +81,7 @@ export function UserManagement() {
     } catch (err) {
       return {
         success: false,
-        error: err instanceof Error ? err.message : "Unknown error",
+        error: err instanceof Error ? err.message : t('messages.unknownError'),
       }
     }
   }
@@ -105,7 +107,7 @@ export function UserManagement() {
 
       if (!response.ok) {
         const error = await response.json()
-        throw new Error(error.error || "Failed to update user")
+        throw new Error(error.error || t('messages.updateFailed'))
       }
 
       await fetchUsers()
@@ -115,7 +117,7 @@ export function UserManagement() {
     } catch (err) {
       return {
         success: false,
-        error: err instanceof Error ? err.message : "Unknown error",
+        error: err instanceof Error ? err.message : t('messages.unknownError'),
       }
     }
   }
@@ -128,7 +130,7 @@ export function UserManagement() {
 
       if (!response.ok) {
         const error = await response.json()
-        throw new Error(error.error || "Failed to delete user")
+        throw new Error(error.error || t('messages.deleteFailed'))
       }
 
       await fetchUsers()
@@ -137,7 +139,7 @@ export function UserManagement() {
     } catch (err) {
       return {
         success: false,
-        error: err instanceof Error ? err.message : "Unknown error",
+        error: err instanceof Error ? err.message : t('messages.unknownError'),
       }
     }
   }
@@ -154,14 +156,14 @@ export function UserManagement() {
 
       if (!response.ok) {
         const error = await response.json()
-        throw new Error(error.error || "Failed to reset password")
+        throw new Error(error.error || t('messages.resetPasswordFailed'))
       }
 
       return { success: true }
     } catch (err) {
       return {
         success: false,
-        error: err instanceof Error ? err.message : "Unknown error",
+        error: err instanceof Error ? err.message : t('messages.unknownError'),
       }
     }
   }
@@ -170,9 +172,9 @@ export function UserManagement() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-bold">User Management</h2>
+          <h2 className="text-3xl font-bold">{t('title')}</h2>
           <p className="mt-2 text-base-content/60">
-            Manage Keycloak users, create new accounts, and update user information.
+            {t('description')}
           </p>
         </div>
         <button
@@ -180,7 +182,7 @@ export function UserManagement() {
           className="btn btn-primary gap-2"
         >
           <PlusIcon className="w-5 h-5" />
-          Create User
+          {t('createUser')}
         </button>
       </div>
 
