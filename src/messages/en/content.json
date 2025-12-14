@@ -1,0 +1,65 @@
+{
+  "videos": {
+    "title": "Video Management",
+    "create": "Add Video",
+    "edit": "Edit Video",
+    "empty": "No videos yet. Create your first video!",
+    "fields": {
+      "videoFile": "Video File",
+      "thumbnail": "Thumbnail",
+      "titleEn": "Title (English)",
+      "titleZh": "Title (Chinese)",
+      "descEn": "Description (English)",
+      "descZh": "Description (Chinese)",
+      "autoplay": "Autoplay",
+      "order": "Order",
+      "published": "Published"
+    }
+  },
+  "characters": {
+    "title": "Character Management",
+    "create": "Add Character",
+    "edit": "Edit Character",
+    "empty": "No characters yet. Create your first character!",
+    "fields": {
+      "image": "Character Image",
+      "nameEn": "Name (English)",
+      "nameZh": "Name (Chinese)",
+      "descEn": "Description (English)",
+      "descZh": "Description (Chinese)",
+      "order": "Order",
+      "featured": "Featured",
+      "published": "Published"
+    }
+  },
+  "items": {
+    "title": "Item Management",
+    "create": "Add Item",
+    "edit": "Edit Item",
+    "empty": "No items yet. Create your first item!",
+    "fields": {
+      "image": "Item Image",
+      "nameEn": "Name (English)",
+      "nameZh": "Name (Chinese)",
+      "descEn": "Description (English)",
+      "descZh": "Description (Chinese)",
+      "rarity": "Rarity",
+      "order": "Order",
+      "featured": "Featured",
+      "published": "Published"
+    }
+  },
+  "skills": {
+    "title": "Skill Management",
+    "addSkill": "Add Skill",
+    "maxSkills": "Maximum 4 skills per character",
+    "fields": {
+      "icon": "Skill Icon",
+      "nameEn": "Name (English)",
+      "nameZh": "Name (Chinese)",
+      "descEn": "Description (English)",
+      "descZh": "Description (Chinese)",
+      "order": "Order"
+    }
+  }
+}

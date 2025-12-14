@@ -1,12 +1,18 @@
 {
   "app": {
     "name": "K-Wiki",
-    "tagline": "Knowledge Base Management System"
+    "tagline": "Knowledge Base Management System",
+    "description": "Game Design Knowledge Base"
   },
   "nav": {
     "home": "Home",
     "profile": "Profile",
-    "userManagement": "User Management"
+    "userManagement": "User Management",
+    "contentManagement": "Content Management",
+    "videos": "Videos",
+    "characters": "Characters",
+    "items": "Items",
+    "dashboard": "Dashboard"
   },
   "buttons": {
     "save": "Save",
@@ -37,6 +43,13 @@
     "emailNotVerified": "Email not verified",
     "created": "Created",
     "lastUpdated": "Last updated",
-    "actions": "Actions"
+    "actions": "Actions",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No"
   }
 }

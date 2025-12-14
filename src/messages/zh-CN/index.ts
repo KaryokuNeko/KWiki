@@ -5,6 +5,9 @@ import profile from './profile.json'
 import users from './users.json'
 import forms from './forms.json'
 import errors from './errors.json'
+import content from './content.json'
+import homepage from './homepage.json'
+import wiki from './wiki.json'
 
 export default {
   common,
@@ -14,4 +17,7 @@ export default {
   users,
   forms,
   errors,
+  content,
+  homepage,
+  wiki,
 }

@@ -32,7 +32,7 @@ export const minioClient = new Minio.Client({
 })
 
 /**
- * Ensure the bucket exists, create if it doesn't
+ * Ensure the bucket exists and has the correct policy
  */
 export async function ensureBucket() {
   try {
@@ -40,22 +40,29 @@ export async function ensureBucket() {
     if (!exists) {
       await minioClient.makeBucket(MINIO_BUCKET_NAME, 'us-east-1')
       console.log(`Created bucket: ${MINIO_BUCKET_NAME}`)
-
-      // Set bucket policy to allow public read access to avatars
-      const policy = {
-        Version: '2012-10-17',
-        Statement: [
-          {
-            Effect: 'Allow',
-            Principal: { AWS: ['*'] },
-            Action: ['s3:GetObject'],
-            Resource: [`arn:aws:s3:::${MINIO_BUCKET_NAME}/avatars/*`],
-          },
-        ],
-      }
-      await minioClient.setBucketPolicy(MINIO_BUCKET_NAME, JSON.stringify(policy))
-      console.log('Set bucket policy for public avatar access')
     }
+
+    // Always ensure bucket policy is set correctly to allow public read access
+    const policy = {
+      Version: '2012-10-17',
+      Statement: [
+        {
+          Effect: 'Allow',
+          Principal: { AWS: ['*'] },
+          Action: ['s3:GetObject'],
+          Resource: [
+            `arn:aws:s3:::${MINIO_BUCKET_NAME}/avatars/*`,
+            `arn:aws:s3:::${MINIO_BUCKET_NAME}/videos/*`,
+            `arn:aws:s3:::${MINIO_BUCKET_NAME}/thumbnails/*`,
+            `arn:aws:s3:::${MINIO_BUCKET_NAME}/characters/*`,
+            `arn:aws:s3:::${MINIO_BUCKET_NAME}/items/*`,
+            `arn:aws:s3:::${MINIO_BUCKET_NAME}/skills/*`,
+          ],
+        },
+      ],
+    }
+    await minioClient.setBucketPolicy(MINIO_BUCKET_NAME, JSON.stringify(policy))
+    console.log('Bucket policy set for public access')
   } catch (error) {
     console.error('Error ensuring bucket exists:', error)
     throw error

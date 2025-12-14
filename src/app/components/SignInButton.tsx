@@ -9,7 +9,7 @@ export function SignInButton() {
   return (
     <button
       onClick={() => signIn("keycloak", { callbackUrl: "/dashboard" })}
-      className="btn btn-primary w-full"
+      className="btn btn-primary btn-sm min-w-24"
     >
       {t('signIn')}
     </button>

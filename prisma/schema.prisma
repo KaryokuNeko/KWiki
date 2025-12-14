@@ -27,3 +27,80 @@ model UserProfile {
   @@map("user_profiles")
   @@index([keycloakId])
 }
+
+// Homepage Video Carousel model
+// Stores video content for the homepage carousel
+model HomepageVideo {
+  id           Int      @id @default(autoincrement())
+  videoUrl     String   @map("video_url") @db.Text
+  titleEn      String   @map("title_en") @db.VarChar(200)
+  titleZh      String   @map("title_zh") @db.VarChar(200)
+  descEn       String?  @map("desc_en") @db.Text
+  descZh       String?  @map("desc_zh") @db.Text
+  thumbnailUrl String?  @map("thumbnail_url") @db.Text
+  autoplay     Boolean  @default(true)
+  order        Int      @default(0)
+  published    Boolean  @default(false)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("homepage_videos")
+  @@index([published, order])
+}
+
+// Character model
+// Stores game characters with their information
+model Character {
+  id        Int              @id @default(autoincrement())
+  nameEn    String           @map("name_en") @db.VarChar(100)
+  nameZh    String           @map("name_zh") @db.VarChar(100)
+  descEn    String           @map("desc_en") @db.Text
+  descZh    String           @map("desc_zh") @db.Text
+  imageUrl  String           @map("image_url") @db.Text
+  order     Int              @default(0)
+  featured  Boolean          @default(false)
+  published Boolean          @default(false)
+  createdAt DateTime         @default(now()) @map("created_at")
+  updatedAt DateTime         @updatedAt @map("updated_at")
+  skills    CharacterSkill[]
+
+  @@map("characters")
+  @@index([published, featured, order])
+}
+
+// Character Skill model
+// Stores skills for each character (max 4 per character)
+model CharacterSkill {
+  id          Int       @id @default(autoincrement())
+  characterId Int       @map("character_id")
+  nameEn      String    @map("name_en") @db.VarChar(100)
+  nameZh      String    @map("name_zh") @db.VarChar(100)
+  descEn      String    @map("desc_en") @db.Text
+  descZh      String    @map("desc_zh") @db.Text
+  iconUrl     String    @map("icon_url") @db.Text
+  order       Int       @default(0)
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  @@map("character_skills")
+  @@index([characterId, order])
+}
+
+// Item model
+// Stores game items
+model Item {
+  id        Int      @id @default(autoincrement())
+  nameEn    String   @map("name_en") @db.VarChar(100)
+  nameZh    String   @map("name_zh") @db.VarChar(100)
+  descEn    String   @map("desc_en") @db.Text
+  descZh    String   @map("desc_zh") @db.Text
+  imageUrl  String   @map("image_url") @db.Text
+  rarity    String?  @db.VarChar(50)
+  order     Int      @default(0)
+  featured  Boolean  @default(false)
+  published Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("items")
+  @@index([published, featured, order])
+}

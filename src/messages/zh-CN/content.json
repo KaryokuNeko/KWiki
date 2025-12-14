@@ -1,0 +1,65 @@
+{
+  "videos": {
+    "title": "视频管理",
+    "create": "添加视频",
+    "edit": "编辑视频",
+    "empty": "还没有视频，创建第一个视频吧！",
+    "fields": {
+      "videoFile": "视频文件",
+      "thumbnail": "缩略图",
+      "titleEn": "标题（英文）",
+      "titleZh": "标题（中文）",
+      "descEn": "描述（英文）",
+      "descZh": "描述（中文）",
+      "autoplay": "自动播放",
+      "order": "排序",
+      "published": "已发布"
+    }
+  },
+  "characters": {
+    "title": "人物管理",
+    "create": "添加人物",
+    "edit": "编辑人物",
+    "empty": "还没有人物，创建第一个人物吧！",
+    "fields": {
+      "image": "人物图片",
+      "nameEn": "名称（英文）",
+      "nameZh": "名称（中文）",
+      "descEn": "描述（英文）",
+      "descZh": "描述（中文）",
+      "order": "排序",
+      "featured": "精选",
+      "published": "已发布"
+    }
+  },
+  "items": {
+    "title": "物品管理",
+    "create": "添加物品",
+    "edit": "编辑物品",
+    "empty": "还没有物品，创建第一个物品吧！",
+    "fields": {
+      "image": "物品图片",
+      "nameEn": "名称（英文）",
+      "nameZh": "名称（中文）",
+      "descEn": "描述（英文）",
+      "descZh": "描述（中文）",
+      "rarity": "稀有度",
+      "order": "排序",
+      "featured": "精选",
+      "published": "已发布"
+    }
+  },
+  "skills": {
+    "title": "技能管理",
+    "addSkill": "添加技能",
+    "maxSkills": "每个人物最多4个技能",
+    "fields": {
+      "icon": "技能图标",
+      "nameEn": "名称（英文）",
+      "nameZh": "名称（中文）",
+      "descEn": "描述（英文）",
+      "descZh": "描述（中文）",
+      "order": "排序"
+    }
+  }
+}

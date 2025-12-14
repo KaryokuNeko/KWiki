@@ -3,7 +3,8 @@
   "sections": {
     "account": "Account Information",
     "profile": "Profile Settings",
-    "avatar": "Avatar"
+    "avatar": "Avatar",
+    "preferences": "Preferences"
   },
   "fields": {
     "username": "Username",
@@ -31,5 +32,18 @@
     "saveSuccess": "Profile updated successfully",
     "invalidFileType": "Invalid file type. Only JPEG, PNG, GIF, and WebP images are allowed.",
     "fileTooLarge": "File too large. Maximum size is {max}MB."
+  },
+  "preferences": {
+    "theme": {
+      "label": "Theme",
+      "light": "Light Mode",
+      "dark": "Dark Mode",
+      "system": "Follow System"
+    },
+    "language": {
+      "label": "Language",
+      "zhCN": "简体中文",
+      "en": "English"
+    }
   }
 }

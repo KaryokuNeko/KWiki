@@ -3,7 +3,8 @@
   "sections": {
     "account": "账户信息",
     "profile": "个人设置",
-    "avatar": "头像"
+    "avatar": "头像",
+    "preferences": "偏好设置"
   },
   "fields": {
     "username": "用户名",
@@ -31,5 +32,18 @@
     "saveSuccess": "资料更新成功",
     "invalidFileType": "无效的文件类型。仅允许 JPEG、PNG、GIF 和 WebP 图片。",
     "fileTooLarge": "文件过大。最大大小为 {max}MB。"
+  },
+  "preferences": {
+    "theme": {
+      "label": "主题",
+      "light": "浅色模式",
+      "dark": "深色模式",
+      "system": "跟随系统"
+    },
+    "language": {
+      "label": "语言",
+      "zhCN": "简体中文",
+      "en": "English"
+    }
   }
 }

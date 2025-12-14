@@ -2,5 +2,7 @@
   "title": "K-Wiki 控制面板",
   "navbar": {
     "title": "K-Wiki 控制面板"
-  }
+  },
+  "welcome": "欢迎来到 K-Wiki 控制面板",
+  "description": "在这里管理您的 Wiki 内容。"
 }

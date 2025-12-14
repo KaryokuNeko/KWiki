@@ -1,0 +1,14 @@
+{
+  "characters": {
+    "title": "Characters",
+    "empty": "No characters to display."
+  },
+  "items": {
+    "title": "Items",
+    "empty": "No items to display."
+  },
+  "actions": {
+    "learnMore": "Learn More",
+    "viewMore": "View More"
+  }
+}

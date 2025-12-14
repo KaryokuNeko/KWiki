@@ -1,43 +1,42 @@
-import { redirect } from "next/navigation"
-import { auth } from "@/auth"
-import { SignInButton } from "./components/SignInButton"
-import { getTranslations } from 'next-intl/server'
+import { FloatingNav } from "./components/FloatingNav"
+import { VideoCarousel } from "./components/VideoCarousel"
+import { CharacterShowcase } from "./components/CharacterShowcase"
+import { ItemGallery } from "./components/ItemGallery"
+import { Footer } from "./components/Footer"
+import { FullPageScroll } from "./components/FullPageScroll"
+import { listPublishedVideos } from "@/lib/homepage-video"
+import { listFeaturedCharacters } from "@/lib/character"
+import { listFeaturedItems } from "@/lib/item"
 
 export default async function Home() {
-  const session = await auth()
-  const t = await getTranslations('auth')
-  const tCommon = await getTranslations('common')
+  // Fetch all content server-side
+  const [videos, characters, items] = await Promise.all([
+    listPublishedVideos(),
+    listFeaturedCharacters(),
+    listFeaturedItems()
+  ])
 
-  if (session?.user) {
-    redirect("/dashboard")
-  }
+  console.log("Fetched homepage content:", { videos, characters, items })
 
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content">
-        <div className="card w-full max-w-md bg-base-100 shadow-xl">
-          <div className="card-body">
-            <div className="text-center mb-4">
-              <h1 className="card-title text-4xl font-bold justify-center mb-2">
-                {tCommon('app.name')}
-              </h1>
-              <p className="text-base-content/60">
-                {t('welcome')}
-              </p>
-            </div>
+    <FullPageScroll>
+      <FloatingNav />
 
-            <div className="space-y-4">
-              <SignInButton />
-            </div>
+      {/* Section 1: Video Carousel */}
+      <section data-section="videos" id="section-videos" className="h-screen w-full">
+        <VideoCarousel videos={videos} />
+      </section>
 
-            <div className="text-center mt-4">
-              <p className="text-sm text-base-content/60">
-                {t('instruction')}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      {/* Section 2: Character Showcase */}
+      <section data-section="characters" id="section-characters" className="h-screen w-full">
+        <CharacterShowcase characters={characters} />
+      </section>
+
+      {/* Section 3: Item Gallery + Footer */}
+      <section data-section="items" id="section-items" className="w-full">
+        <ItemGallery items={items} />
+        <Footer />
+      </section>
+    </FullPageScroll>
   )
 }

@@ -2,5 +2,7 @@
   "title": "K-Wiki Dashboard",
   "navbar": {
     "title": "K-Wiki Dashboard"
-  }
+  },
+  "welcome": "Welcome to K-Wiki Dashboard",
+  "description": "Manage your wiki content from here."
 }

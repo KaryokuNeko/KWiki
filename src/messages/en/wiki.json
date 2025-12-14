@@ -1,0 +1,17 @@
+{
+  "character": {
+    "title": "Character Details",
+    "id": "Character ID",
+    "comingSoon": "This page is under construction. Full character details will be implemented in a future update."
+  },
+  "item": {
+    "title": "Item Details",
+    "id": "Item ID",
+    "comingSoon": "This page is under construction. Full item details will be implemented in a future update."
+  },
+  "items": {
+    "title": "All Items",
+    "comingSoon": "This page is under construction. The full item catalog will be implemented in a future update."
+  },
+  "backToHome": "Back to Home"
+}

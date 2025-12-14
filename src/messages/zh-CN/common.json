@@ -1,12 +1,18 @@
 {
   "app": {
     "name": "K-Wiki",
-    "tagline": "知识库管理系统"
+    "tagline": "知识库管理系统",
+    "description": "游戏设计知识库"
   },
   "nav": {
     "home": "首页",
     "profile": "个人资料",
-    "userManagement": "用户管理"
+    "userManagement": "用户管理",
+    "contentManagement": "内容管理",
+    "videos": "视频管理",
+    "characters": "人物管理",
+    "items": "物品管理",
+    "dashboard": "管理后台"
   },
   "buttons": {
     "save": "保存",
@@ -37,6 +43,13 @@
     "emailNotVerified": "邮箱未验证",
     "created": "创建时间",
     "lastUpdated": "最后更新",
-    "actions": "操作"
+    "actions": "操作",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "close": "关闭",
+    "yes": "是",
+    "no": "否"
   }
 }

@@ -9,7 +9,7 @@ export function SignOutButton() {
   return (
     <button
       onClick={() => signOut({ callbackUrl: "/" })}
-      className="btn btn-error"
+      className="btn btn-error btn-sm"
     >
       {t('signOut')}
     </button>

@@ -1,0 +1,14 @@
+{
+  "characters": {
+    "title": "人物介绍",
+    "empty": "暂无人物展示"
+  },
+  "items": {
+    "title": "物品图鉴",
+    "empty": "暂无物品展示"
+  },
+  "actions": {
+    "learnMore": "了解更多",
+    "viewMore": "查看更多"
+  }
+}

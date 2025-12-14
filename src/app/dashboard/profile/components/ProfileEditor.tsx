@@ -179,37 +179,6 @@ export function ProfileEditor() {
 
   return (
     <div className="space-y-6">
-      {/* Display Keycloak info (read-only) */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold">{t('sections.account')}</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">{t('fields.username')}</span>
-            </label>
-            <input
-              type="text"
-              value={session?.user?.name || tCommon('common.na')}
-              disabled
-              className="input input-bordered bg-base-200"
-            />
-          </div>
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">{t('fields.email')}</span>
-            </label>
-            <input
-              type="text"
-              value={session?.user?.email || tCommon('common.na')}
-              disabled
-              className="input input-bordered bg-base-200"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="divider"></div>
-
       {/* Editable profile form */}
       <form onSubmit={handleSubmit} className="space-y-4">
         <h3 className="text-lg font-semibold">{t('sections.profile')}</h3>
@@ -262,30 +231,15 @@ export function ProfileEditor() {
             </div>
           </div>
 
-          {/* Optional: Manual URL input */}
-          <div className="collapse collapse-arrow bg-base-200">
-            <input type="checkbox" />
-            <div className="collapse-title text-sm font-medium">
-              {t('upload.orEnterUrl')}
-            </div>
-            <div className="collapse-content">
-              <input
-                type="url"
-                value={avatarUrl}
-                onChange={(e) => setAvatarUrl(e.target.value)}
-                placeholder={t('placeholders.avatarUrl')}
-                className="input input-bordered w-full"
-              />
-            </div>
-          </div>
         </div>
 
         <div className="divider"></div>
 
+        {/* Nickname section */}
         <div className="form-control">
           <label className="label">
-            <span className="label-text">{t('fields.nickname')}</span>
-            <span className="label-text-alt">{t('hints.nicknameMaxLength', { max: 100 })}</span>
+            <span className="label-text font-medium">{t('fields.nickname')}</span>
+            <span className="label-text-alt text-base-content/60">{t('hints.nicknameMaxLength', { max: 100 })}</span>
           </label>
           <input
             type="text"
@@ -293,7 +247,7 @@ export function ProfileEditor() {
             onChange={(e) => setNickname(e.target.value)}
             maxLength={100}
             placeholder={t('placeholders.nickname')}
-            className="input input-bordered"
+            className="input input-bordered w-full"
           />
         </div>
 

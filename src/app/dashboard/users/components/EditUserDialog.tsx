@@ -76,18 +76,19 @@ export function EditUserDialog({ isOpen, user, onClose, onSubmit }: EditUserDial
   return (
     <dialog className={`modal ${isOpen ? "modal-open" : ""}`}>
       <div className="modal-box w-11/12 max-w-2xl">
-        <form method="dialog">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="font-bold text-xl">{t('editDialog.title')}</h3>
           <button
             type="button"
             onClick={handleClose}
-            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            className="btn btn-sm btn-circle btn-ghost"
           >
             ✕
           </button>
-        </form>
-        <h3 className="font-bold text-lg mb-4">{t('editDialog.title')}</h3>
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           {error && (
             <div role="alert" className="alert alert-error">
               <XCircleIcon className="h-6 w-6 shrink-0 stroke-current" />
@@ -95,9 +96,13 @@ export function EditUserDialog({ isOpen, user, onClose, onSubmit }: EditUserDial
             </div>
           )}
 
+          {/* Username (read-only) */}
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Username</span>
+              <span className="label-text font-medium">Username</span>
+              <span className="label-text-alt text-base-content/60">
+                {t('editDialog.hints.usernameReadonly')}
+              </span>
             </label>
             <input
               type="text"
@@ -105,16 +110,12 @@ export function EditUserDialog({ isOpen, user, onClose, onSubmit }: EditUserDial
               value={user.username}
               className="input input-bordered input-disabled"
             />
-            <label className="label">
-              <span className="label-text-alt text-base-content/60">
-                {t('editDialog.hints.usernameReadonly')}
-              </span>
-            </label>
           </div>
 
+          {/* Email */}
           <div className="form-control">
             <label className="label">
-              <span className="label-text">
+              <span className="label-text font-medium">
                 {t('createDialog.fields.email')} <span className="text-error">*</span>
               </span>
             </label>
@@ -123,71 +124,79 @@ export function EditUserDialog({ isOpen, user, onClose, onSubmit }: EditUserDial
               required
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="input input-bordered"
+              className="input input-bordered w-full"
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          {/* First Name & Last Name */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="form-control">
               <label className="label">
-                <span className="label-text">{t('createDialog.fields.firstName')}</span>
+                <span className="label-text font-medium">{t('createDialog.fields.firstName')}</span>
               </label>
               <input
                 type="text"
                 value={formData.firstName}
                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                className="input input-bordered"
+                className="input input-bordered w-full"
               />
             </div>
 
             <div className="form-control">
               <label className="label">
-                <span className="label-text">{t('createDialog.fields.lastName')}</span>
+                <span className="label-text font-medium">{t('createDialog.fields.lastName')}</span>
               </label>
               <input
                 type="text"
                 value={formData.lastName}
                 onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                className="input input-bordered"
+                className="input input-bordered w-full"
               />
             </div>
           </div>
 
-          <div className="form-control">
-            <label className="label cursor-pointer justify-start gap-2">
-              <input
-                type="checkbox"
-                checked={formData.enabled}
-                onChange={(e) => setFormData({ ...formData, enabled: e.target.checked })}
-                className="checkbox checkbox-primary"
-              />
-              <span className="label-text">{t('createDialog.hints.enabled')}</span>
-            </label>
+          <div className="divider my-2"></div>
+
+          {/* Checkboxes */}
+          <div className="space-y-3">
+            <div className="form-control">
+              <label className="label cursor-pointer justify-start gap-3 py-2">
+                <input
+                  type="checkbox"
+                  checked={formData.enabled}
+                  onChange={(e) => setFormData({ ...formData, enabled: e.target.checked })}
+                  className="checkbox checkbox-primary"
+                />
+                <span className="label-text">{t('createDialog.hints.enabled')}</span>
+              </label>
+            </div>
+
+            <div className="form-control">
+              <label className="label cursor-pointer justify-start gap-3 py-2">
+                <input
+                  type="checkbox"
+                  checked={formData.emailVerified}
+                  onChange={(e) => setFormData({ ...formData, emailVerified: e.target.checked })}
+                  className="checkbox checkbox-primary"
+                />
+                <span className="label-text">{t('createDialog.hints.emailVerified')}</span>
+              </label>
+            </div>
           </div>
 
-          <div className="form-control">
-            <label className="label cursor-pointer justify-start gap-2">
-              <input
-                type="checkbox"
-                checked={formData.emailVerified}
-                onChange={(e) => setFormData({ ...formData, emailVerified: e.target.checked })}
-                className="checkbox checkbox-primary"
-              />
-              <span className="label-text">{t('createDialog.hints.emailVerified')}</span>
-            </label>
-          </div>
-
+          {/* Info Alert */}
           <div role="alert" className="alert alert-info">
             <InformationCircleIcon className="h-6 w-6 shrink-0 stroke-current" />
             <span>{t('editDialog.hints.passwordNote')}</span>
           </div>
 
-          <div className="modal-action">
+          {/* Action Buttons */}
+          <div className="flex justify-end gap-3 pt-4">
             <button
               type="button"
               onClick={handleClose}
               disabled={loading}
-              className="btn"
+              className="btn btn-ghost"
             >
               {tCommon('buttons.cancel')}
             </button>
@@ -198,7 +207,7 @@ export function EditUserDialog({ isOpen, user, onClose, onSubmit }: EditUserDial
             >
               {loading ? (
                 <>
-                  <span className="loading loading-spinner"></span>
+                  <span className="loading loading-spinner loading-sm"></span>
                   {tCommon('status.updating')}
                 </>
               ) : (
